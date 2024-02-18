@@ -4,7 +4,6 @@ import "errors"
 
 var (
 	ErrQueueEmpty = errors.New("queue empty")
-	ErrQueueFull  = errors.New("queue full")
 )
 
 type Queue[T any] interface {
