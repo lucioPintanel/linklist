@@ -1,32 +1,44 @@
 package linklist
 
-import (
-	"container/list"
-	"errors"
-)
+import "errors"
 
 var (
 	ErrQueueEmpty = errors.New("queue empty")
+	ErrQueueFull  = errors.New("queue full")
 )
 
-type customQueue[T any] struct {
-	queue *list.List
+type Queue[T any] interface {
+	Enqueue(T) error
+	Dequeue() (T, error)
+	Size() int
 }
 
-func NewList[T any]() *customQueue[T] {
-	return &customQueue[T]{
-		queue: list.New(),
-	}
+type node[T any] struct {
+	value T
+	next  *node[T]
 }
 
-func (c *customQueue[T]) Enqueue(value T) {
-	c.queue.PushBack(value)
+type LinkedListQueue[T any] struct {
+	head   *node[T]
+	tail   *node[T]
+	length int
 }
 
-func (q *customQueue[T]) Size() int {
-	return q.queue.Len()
+// Dequeue implements Queue.
+func (q *LinkedListQueue[T]) Dequeue() (T, error) {
+	panic("unimplemented")
 }
 
-func (q *customQueue[T]) Empty() bool {
-	return q.Size() == 0
+// Enqueue implements Queue.
+func (q *LinkedListQueue[T]) Enqueue(T) error {
+	panic("unimplemented")
+}
+
+// Len implements Queue.
+func (q *LinkedListQueue[T]) Size() int {
+	return q.length
+}
+
+func NewLinkedListQueue[T any]() Queue[T] {
+	return &LinkedListQueue[T]{}
 }
